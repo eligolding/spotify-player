@@ -1,0 +1,22 @@
+.playlist_display_header {
+  align-items: baseline;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.playlist_display_header__song_count {
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 1rem;
+}
+
+.playlist_table td {
+  padding: 0.5rem;
+}
+
+.playlist_table tr {
+  border-bottom: #2d3748 1px solid;
+}
+
+.playlist_table tr:hover {
+  background-color: #2d3748;
+}

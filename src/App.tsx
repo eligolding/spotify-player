@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import LoginPage from "./pages/Login";
+import HomePage from "./pages/Home";
+
+function useToken() {
+  const [token, setToken] = useState<string>();
+  useEffect(() => {
+    setToken(localStorage.getItem("access_token") || "");
+  }, []);
+  return { token, setToken };
+}
+
+// I called this UserContext even though for now it only has the token cuz in a full blown app
+// the token would belong to the global user, probably stored in redux.
+export const UserContext = React.createContext<ReturnType<typeof useToken>>({
+  token: "",
+  setToken: () => {},
+});
 
 function App() {
+  const { token, setToken } = useToken();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ token, setToken }}>
+      <div className="layout">
+        <div className="header">
+          <h1>Music with Lev 💚</h1>
+        </div>
+        {token ? <HomePage /> : <LoginPage />}
+        <div className="footer" />
+      </div>
+    </UserContext.Provider>
   );
 }
 
